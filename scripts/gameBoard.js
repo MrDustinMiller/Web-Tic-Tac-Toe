@@ -15,10 +15,6 @@ const gameBoard = (() => {
     ],
   };
 
-  const init = () => {
-    buildBoard();
-  };
-
   const buildBoard = () => {
     const table = document.createElement('table');
 
@@ -34,6 +30,10 @@ const gameBoard = (() => {
     }
 
     boardObj.board.push(display.displayController.boardDisplay);
+  };
+
+  const init = () => {
+    buildBoard();
   };
 
   return { init, boardObj };

@@ -2,30 +2,6 @@ import board from './gameBoard.js';
 import display from './displayController.js';
 
 const gameController = (() => {
-  const init = () => {
-    bindEvents();
-    // cacheDom();
-    setPlayerMarker();
-  };
-
-  // const cacheDom = () => {
-  //   gameController.gamebox = document.querySelectorAll('.cell');
-  // };
-
-  const bindEvents = () => {
-    // const array = Array.from(display.displayController.markerChoices);
-    // array.forEach((item) => item.addEventListener('click', getPlayerMarker));
-    gameController.gamebox = document.querySelectorAll('.cell');
-    gameController.gamebox.forEach((item) =>
-      item.addEventListener('click', addPlayerMarker)
-    );
-  };
-
-  const makeCharacter = (marker) => {
-    const player = marker;
-    return { player };
-  };
-
   const checkForWin = () => {
     const array = Array.from(gameController.gamebox);
     const markedBoard = array.filter((item) => item.textContent !== '');
@@ -40,15 +16,55 @@ const gameController = (() => {
       if (markedCells.length === 3) {
         const markers = markedCells.map((cell) => cell.textContent);
         if (markers.every((marker) => marker === 'X')) {
-          display.displayController.winnerDisplay.textContent = `${gameController.currentPlayer.player} wins!`;
-          return;
+          gameController.turnDisplay.textContent = `${gameController.currentPlayer.player} wins!`;
+          return 1;
         }
         if (markers.every((marker) => marker === 'O')) {
-          display.displayController.winnerDisplay.textContent = `${gameController.currentPlayer.player} wins!`;
-          return;
+          gameController.turnDisplay.textContent = `${gameController.currentPlayer.player} wins!`;
+          return 1;
         }
       }
     }
+    return 0;
+  };
+
+  const changePlayerMarker = () => {
+    gameController.currentPlayer.player =
+      gameController.currentPlayer.player === 'X' ? 'O' : 'X';
+  };
+
+  const addPlayerMarker = (e) => {
+    // prevent user from overwriting marker on any cell
+    if (e.target.textContent !== '') return;
+    // should only need this one line because i should flip the player marker on each turn (really should have 2 seperate player objects though)
+    e.target.textContent = `${gameController.currentPlayer.player}`;
+
+    const winValue = checkForWin();
+    // someone won if return = 1
+    if (winValue === 1) {
+      display.displayController.overlay();
+      return;
+    }
+
+    changePlayerMarker();
+    display.displayController.displayPlayer();
+  };
+
+  const bindEvents = () => {
+    gameController.gamebox = document.querySelectorAll('.cell');
+    gameController.gamebox.forEach((item) =>
+      item.addEventListener('click', addPlayerMarker)
+    );
+  };
+
+  const cacheDom = () => {
+    gameController.turnDisplay = document.querySelector('.turnDisplay');
+    gameController.gameArea = document.querySelector('.game-area');
+  };
+
+  const makeCharacter = (marker) => {
+    const player = marker;
+    return { player };
   };
 
   const setPlayerMarker = () => {
@@ -57,16 +73,11 @@ const gameController = (() => {
     gameController.currentPlayer = player;
   };
 
-  const addPlayerMarker = (e) => {
-    // prevent user from overwriting marker on any cell
-    if (e.target.textContent !== '') return;
-
-    // should only need this one line because i should flip the player marker on each turn (really should have 2 seperate player objects though)
-    e.target.textContent = `${gameController.currentPlayer.player}`;
-
-    checkForWin();
-    gameController.currentPlayer.player =
-      gameController.currentPlayer.player === 'X' ? 'O' : 'X';
+  const init = () => {
+    bindEvents();
+    setPlayerMarker();
+    cacheDom();
+    display.displayController.displayPlayer();
   };
 
   return { init, setPlayerMarker };

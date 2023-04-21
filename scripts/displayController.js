@@ -1,13 +1,17 @@
-const displayController = {
-  init() {
-    this.cacheDom();
-  },
+const displayController = (() => {
+  const init = () => {
+    cacheDom();
+  };
 
-  cacheDom() {
-    this.boardDisplay = document.querySelector('.gameboard');
-    this.markerChoices = document.querySelector('.choices').children;
-    this.winnerDisplay = document.querySelector('.winning-display');
-  },
-};
+  const cacheDom = () => {
+    displayController.boardDisplay = document.querySelector('.gameboard');
+    // displayController.markerChoices =
+    //   document.querySelector('.choices').children;
+    displayController.winnerDisplay =
+      document.querySelector('.winning-display');
+  };
+
+  return { init };
+})();
 
 export default { displayController };

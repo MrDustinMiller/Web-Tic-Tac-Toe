@@ -1,33 +1,39 @@
 import board from './gameBoard.js';
 import display from './displayController.js';
-import gameBoard from './gameBoard.js';
 
-const gameController = {
-  bindEvents() {
-    const array = Array.from(display.displayController.markerChoices);
-    array.forEach((item) =>
-      item.addEventListener('click', gameController.getPlayerMarker, false)
+const gameController = (() => {
+  const init = () => {
+    bindEvents();
+    // cacheDom();
+    setPlayerMarker();
+  };
+
+  // const cacheDom = () => {
+  //   gameController.gamebox = document.querySelectorAll('.cell');
+  // };
+
+  const bindEvents = () => {
+    // const array = Array.from(display.displayController.markerChoices);
+    // array.forEach((item) => item.addEventListener('click', getPlayerMarker));
+    gameController.gamebox = document.querySelectorAll('.cell');
+    gameController.gamebox.forEach((item) =>
+      item.addEventListener('click', addPlayerMarker)
     );
+  };
 
-    this.gamebox = document.querySelectorAll('.cell');
-    this.gamebox.forEach((item) =>
-      item.addEventListener('click', gameController.addPlayerMarker)
-    );
-  },
-
-  makeCharacter(marker) {
+  const makeCharacter = (marker) => {
     const player = marker;
     return { player };
-  },
+  };
 
-  checkForWin() {
-    const array = Array.from(this.gamebox);
+  const checkForWin = () => {
+    const array = Array.from(gameController.gamebox);
     const markedBoard = array.filter((item) => item.textContent !== '');
     // const xMarkersOnBoard = array.filter((item) => item.textContent === 'X');
     // const oMarkersOnBoard = array.filter((item) => item.textContent === 'O');
 
-    for (let i = 0; i < board.gameBoard.winPatterns.length; i += 1) {
-      const pattern = board.gameBoard.winPatterns[i];
+    for (let i = 0; i < board.gameBoard.boardObj.winPatterns.length; i += 1) {
+      const pattern = board.gameBoard.boardObj.winPatterns[i];
       const markedCells = markedBoard.filter((cell) =>
         pattern.includes(parseInt(cell.dataset.num, 10))
       );
@@ -43,30 +49,27 @@ const gameController = {
         }
       }
     }
-  },
+  };
 
-  getPlayerMarker() {
-    board.gameBoard.playerMarker = this.innerText || 'X';
-    const player = gameController.makeCharacter(board.gameBoard.playerMarker);
-    console.log(player);
+  const setPlayerMarker = () => {
+    board.gameBoard.playerMarker = 'X';
+    const player = makeCharacter(board.gameBoard.playerMarker);
     gameController.currentPlayer = player;
-  },
+  };
 
-  addPlayerMarker() {
-    // below is testing, def fix it
-    const marker = gameController.currentPlayer.player === 'X' ? 'O' : 'X';
-    console.log(marker);
+  const addPlayerMarker = (e) => {
     // prevent user from overwriting marker on any cell
-    if (this.textContent !== '') return;
+    if (e.target.textContent !== '') return;
 
-    // 'this' is referring to the specefic element that calls this function from bindEvents()
-    if (marker === 'O') {
-      this.textContent = `${gameController.currentPlayer.player}`;
-    } else {
-      this.textContent = `${gameController.currentPlayer.player}`;
-    }
-    gameController.checkForWin();
-  },
-};
+    // should only need this one line because i should flip the player marker on each turn (really should have 2 seperate player objects though)
+    e.target.textContent = `${gameController.currentPlayer.player}`;
+
+    checkForWin();
+    gameController.currentPlayer.player =
+      gameController.currentPlayer.player === 'X' ? 'O' : 'X';
+  };
+
+  return { init, setPlayerMarker };
+})();
 
 export default { gameController };

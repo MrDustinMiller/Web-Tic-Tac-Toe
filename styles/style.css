@@ -1,0 +1,83 @@
+body {
+    background-image: url(/bg.svg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position:center;
+    height: 97dvh;
+}
+
+li {
+    list-style-type: none;
+}
+
+button {
+    min-width: 100px;
+    min-height: 30px; 
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+td.cell:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+header {
+    text-align: center;
+}
+
+.choices {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    gap: 1rem;
+}
+
+.main{
+    display: flex;
+    height: 600px;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameboard {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    text-align: center; 
+    min-width: 400px;
+}
+
+td.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(207, 202, 202, 0.6);
+    height: 70px;
+    min-width: 30.3%;
+    -webkit-transition: all 0.5  ease;
+    -o-transition: all 0.5  ease;
+    transition: all 0.5  ease;  
+}
+
+td.cell:active {
+    -webkit-transform:scale(0.985);
+        -ms-transform:scale(0.985);
+            transform:scale(0.985)}
+
+td {
+    border: 1px solid black;
+}

@@ -36,6 +36,9 @@ const displayController = (() => {
     const container = document.createElement('div');
     container.setAttribute('class', 'container');
     wrapper.appendChild(container);
+    displayController.modalWinMsg = document.createElement('p');
+    displayController.modalWinMsg.style.color = 'white';
+    container.appendChild(displayController.modalWinMsg);
     const restartBtn = document.createElement('button');
     restartBtn.textContent = 'Play Again?';
     container.appendChild(restartBtn);

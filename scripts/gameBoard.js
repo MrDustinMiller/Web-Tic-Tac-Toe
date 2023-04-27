@@ -16,17 +16,14 @@ const gameBoard = (() => {
   };
 
   const buildBoard = () => {
-    const table = document.createElement('table');
-
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < 9; i++) {
-      const row = document.createElement('tr');
-      const tableData = document.createElement('td');
-      tableData.setAttribute('data-num', i);
-      tableData.setAttribute('class', 'cell');
-      display.displayController.boardDisplay.appendChild(table);
-      display.displayController.boardDisplay.appendChild(row);
-      display.displayController.boardDisplay.appendChild(tableData);
+    const grid = document.createElement('div');
+    grid.setAttribute('class', 'grid');
+    for (let i = 0; i < 9; i += 1) {
+      const cell = document.createElement('div');
+      cell.setAttribute('data-num', i);
+      cell.setAttribute('class', 'cell');
+      display.displayController.boardDisplay.appendChild(grid);
+      grid.appendChild(cell);
     }
 
     boardObj.board.push(display.displayController.boardDisplay);

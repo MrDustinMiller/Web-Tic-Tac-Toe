@@ -1,3 +1,9 @@
+
+:root {
+    font-size: 1rem;
+}
+
+
 body {
     background-image: url(/bg.svg);
     background-repeat: no-repeat;
@@ -10,18 +16,14 @@ li {
     list-style-type: none;
 }
 
-button {
-    min-width: 100px;
-    min-height: 30px; 
-    border: 2px solid black;
-    border-radius: 8px;
-}
-
-td.cell:hover {
+.cell:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
 header {
+    background-color: rgba(255, 255, 255, 0.368);
+    font-size: 1.75rem;
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 
@@ -32,48 +34,40 @@ header {
     align-items: center;
 }
 
-.gameboard {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: end;
-    text-align: center; 
-    min-width: 400px;
+.grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0.25rem;
+  text-align: center; 
+  min-width: 300px; 
 }
 
-td.cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(207, 202, 202, 0.6);
-    height: 70px;
-    min-width: 30.3%;
+.cell {
+  font-size: 2rem;
+  border: 1px solid black;
+  width: 110px;
+  height: 50px;
+  background: rgb(222, 221, 221);
+  padding: .5em;
     -webkit-transition: all 0.5  ease;
     -o-transition: all 0.5  ease;
     transition: all 0.5  ease;  
 }
 
-td.cell:active {
+.cell:active {
     -webkit-transform:scale(0.985);
         -ms-transform:scale(0.985);
             transform:scale(0.985)}
 
-td {
-    border: 1px solid black;
-}
-
 p {
     text-align: center;
-    font-size:2rem;
-    color: rgb(6, 7, 6);
+    font-size:3rem;
+    color: rgb(0, 0, 0);
+    /* background-color: rgba(39, 29, 29, 0.368); */
 }
+
+/* overlay and modal below */
 
 .overlay {
     display: flex;
@@ -95,7 +89,7 @@ p {
     background-color: rgb(10, 10, 10, 0.9);
     border: 1px solid black;
     border-radius: 8px;
-    width: 350px;
+    width: 450px;
 }
 
 .wrapper > p {
@@ -107,15 +101,27 @@ p {
     min-height: 175px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
 }
 
 button {
+    font-size: 1rem;
+    margin: 0.5rem;
+    padding: .5rem;
+    background-color: #479740;
     cursor: pointer;
+    transition: all ease 0.3s;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
+button:hover {
+    transform: scale(1.2);
 }
 
 .fa-x {
-    color: white;
+    color:grey;
     cursor: pointer;
     float: right;
     margin: 0.5rem;

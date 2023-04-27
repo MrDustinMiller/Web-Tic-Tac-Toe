@@ -2,11 +2,11 @@ import board from './gameBoard.js';
 import display from './displayController.js';
 
 const gameController = (() => {
+  let gameCount = 0;
+
   const checkForWin = () => {
     const array = Array.from(gameController.gamebox);
     const markedBoard = array.filter((item) => item.textContent !== '');
-    // const xMarkersOnBoard = array.filter((item) => item.textContent === 'X');
-    // const oMarkersOnBoard = array.filter((item) => item.textContent === 'O');
 
     for (let i = 0; i < board.gameBoard.boardObj.winPatterns.length; i += 1) {
       const pattern = board.gameBoard.boardObj.winPatterns[i];
@@ -34,16 +34,25 @@ const gameController = (() => {
   };
 
   const addPlayerMarker = (e) => {
+    gameCount += 1;
+    console.log(gameCount);
     // prevent user from overwriting marker on any cell
     if (e.target.textContent !== '') return;
+
     // should only need this one line because i should flip the player marker on each turn (really should have 2 seperate player objects though)
     e.target.textContent = `${gameController.currentPlayer.player}`;
 
-    const winValue = checkForWin();
     // someone won if return = 1
+    const winValue = checkForWin();
     if (winValue === 1) {
       display.displayController.overlay();
+      display.displayController.modalWinMsg.textContent = `${gameController.currentPlayer.player} wins!`;
       return;
+    }
+
+    if (gameCount === 9) {
+      display.displayController.overlay();
+      display.displayController.modalWinMsg.textContent = `It's a tie!`;
     }
 
     changePlayerMarker();

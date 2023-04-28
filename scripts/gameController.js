@@ -47,12 +47,14 @@ const gameController = (() => {
     if (winValue === 1) {
       display.displayController.overlay();
       display.displayController.modalWinMsg.textContent = `${gameController.currentPlayer.player} wins!`;
+      gameCount = 0;
       return;
     }
 
     if (gameCount === 9) {
       display.displayController.overlay();
       display.displayController.modalWinMsg.textContent = `It's a tie!`;
+      gameCount = 0;
     }
 
     changePlayerMarker();
